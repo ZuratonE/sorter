@@ -42,7 +42,7 @@ namespace SorterApp {
 
 			int wn = rnd.Next( 1, maxWords );
 			for ( int i = 1; i < wn; i++ ) {
-				lineString += " " + words[rnd.Next( 0, words.Count() )];
+                lineString += " " + words[rnd.Next(0, words.Count())].ToLower();
 			}
 
 			if ( lines.Count < linesMaxCount )

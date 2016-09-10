@@ -32,13 +32,15 @@ namespace SorterApp {
 			openFileDialog1.Multiselect = false;
 
 			if ( openFileDialog1.ShowDialog() == DialogResult.OK ) {
-				var f = File.Open( labelDictionaryFileName.Text, FileMode.Open );
+
+                var f = File.Open(openFileDialog1.FileName, FileMode.Open);
 				if(f.Length < 10*1024*1024) {
 					labelDictionaryFileName.Text = Properties.Settings.Default.dictionaryFileName = openFileDialog1.FileName;
 				}
 				else {
 					MessageBox.Show( "Dictionary too big!" );
 				}
+                f.Close();
 			}
 		}
 
@@ -71,6 +73,7 @@ namespace SorterApp {
 							);
 
 				labelGenTime.Text = t.ToString();
+               
 			}
 
 		}
