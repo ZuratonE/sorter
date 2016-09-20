@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SorterApp {
@@ -17,6 +19,9 @@ namespace SorterApp {
 		private int maxWords;
 
 		private TimeSpan generationTime;
+
+		CultureInfo cultureInfo;
+		TextInfo textInfo;
 
 		public TimeSpan getGenerationTime() {
 			return generationTime;
@@ -40,14 +45,17 @@ namespace SorterApp {
 			this.maxWords = maxWords;
 			NewLine();
 
+			cultureInfo = Thread.CurrentThread.CurrentCulture;
+			textInfo = cultureInfo.TextInfo;
+
 		}
 
 		private string NewLine() {
-			string lineString = ". " + System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase( words[rnd.Next( 0, words.Count() )].ToLower() );
+			string lineString = ". " + textInfo.ToTitleCase( words[rnd.Next( 0, words.Count() )] );
 
 			int wn = rnd.Next( 1, maxWords );
 			for ( int i = 1; i < wn; i++ ) {
-                lineString += " " + words[rnd.Next(0, words.Count())].ToLower();
+                lineString += " " + textInfo.ToLower( words[rnd.Next(0, words.Count())] );
 			}
 
 			if ( linesCached.Count == linesMaxCount ) {

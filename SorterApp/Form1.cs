@@ -107,5 +107,11 @@ namespace SorterApp {
 				//MessageBox.Show( "Enter 'Max file size Mb'" );
 			}
 		}
+
+		private void button1_Click( object sender, EventArgs e ) {
+			var s= new Sorter();
+			var l = s.test();
+			
+		}
 	}
 }

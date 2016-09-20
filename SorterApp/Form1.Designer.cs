@@ -39,6 +39,8 @@
 			this.textBoxMaxWords = new System.Windows.Forms.TextBox();
 			this.textBoxMaxNumber = new System.Windows.Forms.TextBox();
 			this.textBoxSizeMb = new System.Windows.Forms.TextBox();
+			this.button1 = new System.Windows.Forms.Button();
+			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
 			this.SuspendLayout();
 			// 
 			// buttonSelectDictionaryFile
@@ -140,11 +142,31 @@
 			this.textBoxSizeMb.TabIndex = 15;
 			this.textBoxSizeMb.TextChanged += new System.EventHandler(this.textBoxSizeMb_TextChanged);
 			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(278, 152);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(228, 23);
+			this.button1.TabIndex = 16;
+			this.button1.Text = "Sort";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
+			// 
+			// richTextBox1
+			// 
+			this.richTextBox1.Location = new System.Drawing.Point(278, 12);
+			this.richTextBox1.Name = "richTextBox1";
+			this.richTextBox1.Size = new System.Drawing.Size(228, 134);
+			this.richTextBox1.TabIndex = 17;
+			this.richTextBox1.Text = "";
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(563, 334);
+			this.Controls.Add(this.richTextBox1);
+			this.Controls.Add(this.button1);
 			this.Controls.Add(this.textBoxSizeMb);
 			this.Controls.Add(this.textBoxMaxNumber);
 			this.Controls.Add(this.textBoxMaxWords);
@@ -178,6 +200,8 @@
 		private System.Windows.Forms.TextBox textBoxMaxNumber;
 		private System.Windows.Forms.TextBox textBoxSizeMb;
 		protected internal System.Windows.Forms.TextBox textBoxMaxWords;
+		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.RichTextBox richTextBox1;
 	}
 }
 
