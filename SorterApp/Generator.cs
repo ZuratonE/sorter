@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SorterApp {
 	class Generator {
-		private List<string> lines;
+		private List<string> linesCached;
 		private const int linesMaxCount = 100;
 		private const int repeatStringProbabilityPercent = 3;
 
@@ -16,9 +16,14 @@ namespace SorterApp {
 		private int maxNumber;
 		private int maxWords;
 
+		private TimeSpan generationTime;
+
+		public TimeSpan getGenerationTime() {
+			return generationTime;
+		}
 
 		public Generator( string dictFileName, int maxNumber, int maxWords ) {
-			lines = new List<string>();
+			linesCached = new List<string>();
 			rnd = new Random();
 
 			words = new List<string>();
@@ -45,21 +50,24 @@ namespace SorterApp {
                 lineString += " " + words[rnd.Next(0, words.Count())].ToLower();
 			}
 
-			if ( lines.Count < linesMaxCount )
-				lines.Add( lineString );
+			if ( linesCached.Count == linesMaxCount ) {
+				linesCached.RemoveAt( rnd.Next( linesCached.Count ) ); // drop random line
+			}
+				
+			linesCached.Add( lineString );
 
 			return lineString;
 		}
 
 		private string OldLine() {
-			return lines.ElementAt( rnd.Next( lines.Count ) );
+			return linesCached.ElementAt( rnd.Next( linesCached.Count ) );
 		}
 
 		private string GetKey() {
 			return rnd.Next( maxNumber + 1 ).ToString();
 		}
 
-		public TimeSpan Generate( string fileName, int sizeMb, System.Windows.Forms.ProgressBar bar ) {
+		public long Generate( string fileName, int sizeMb, System.Windows.Forms.ProgressBar bar ) {
 
 			System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
 
@@ -85,10 +93,15 @@ namespace SorterApp {
 
 			file.WriteLine( GetKey() + OldLine() ); // guarantee that at least one string will repeat
 
+			long finalSize = file.BaseStream.Length;
 			file.Close();
 
 			stopwatch.Stop();
-			return stopwatch.Elapsed;
+			generationTime = stopwatch.Elapsed;
+
+			return finalSize;
 		}
+
+
 	}
 }

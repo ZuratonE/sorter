@@ -66,13 +66,13 @@ namespace SorterApp {
 										Properties.Settings.Default.maxWordsInLine 
 				);
 
-				var t = g.Generate(
+				var s = g.Generate(
 								saveFileDialog1.FileName,
 								Properties.Settings.Default.fileSizeMb,
 								progressBar1
 							);
 
-				labelGenTime.Text = t.ToString();
+				labelGenTime.Text = g.getGenerationTime().ToString();
                
 			}
 
