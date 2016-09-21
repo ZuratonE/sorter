@@ -9,32 +9,30 @@ using System.Threading.Tasks;
 
 namespace SorterApp {
 	class Sorter {
-		private SortedList<string, int> dict = new SortedList<string, int>();
-		CultureInfo cultureInfo;
-		TextInfo textInfo;
+
+		LineRecordFactory lineRecordFactory;
 
 		public Sorter() {
-			cultureInfo = Thread.CurrentThread.CurrentCulture;
-			textInfo = cultureInfo.TextInfo;
+			lineRecordFactory = new LineRecordFactory();
 		}
 
 		public List<LineRecord> test() {
 			List<LineRecord> recList = new List<LineRecord>();
 
-			recList.Add( new LineRecord( "1. Aa", dict, textInfo ) );
-			recList.Add( new LineRecord( "2. Aa ab aa", dict, textInfo ) );
-			recList.Add( new LineRecord( "3. Aa ab", dict, textInfo ) );
-			recList.Add( new LineRecord( "4. Ab aa ab", dict, textInfo ) );
-			recList.Add( new LineRecord( "5. Aa", dict, textInfo ) );
-			recList.Add( new LineRecord( "6. Ab aa ac", dict, textInfo ) );
-			recList.Add( new LineRecord( "7. Ab ad", dict, textInfo ) );
-			recList.Add( new LineRecord( "8. Ab ab", dict, textInfo ) );
-			recList.Add( new LineRecord( "9. Ab ab aa", dict, textInfo ) );
+			recList.Add( lineRecordFactory.Make( "1. Aa") );
+			recList.Add( lineRecordFactory.Make( "2. Aa ab aa") );
+			recList.Add( lineRecordFactory.Make( "3. Aa ab") );
+			recList.Add( lineRecordFactory.Make( "4. Ab aa ab") );
+			recList.Add( lineRecordFactory.Make( "5. Aa") );
+			recList.Add( lineRecordFactory.Make( "6. Ab aa ac") );
+			recList.Add( lineRecordFactory.Make( "7. Ab ad") );
+			recList.Add( lineRecordFactory.Make( "8. Ab ab") );
+			recList.Add( lineRecordFactory.Make( "9. Ab ab aa") );
 
 			recList.Sort();
 
 			for(int i=0;i<recList.Count;i++ ) {
-				Console.WriteLine( recList.ElementAt( i ).ToString(dict,textInfo) );
+				Console.WriteLine( lineRecordFactory.ToString( recList.ElementAt( i )) );
 			}
 
 			return recList;
@@ -45,7 +43,7 @@ namespace SorterApp {
 			List<LineRecord> recList = new List<LineRecord>();
 			long pos = file.BaseStream.Position;
 			while ( !file.EndOfStream ) {
-				recList.Add( new LineRecord( file.ReadLine(), dict, textInfo ) );
+				recList.Add( lineRecordFactory.Make( file.ReadLine() ) );
 				if ( (file.BaseStream.Position - pos) > readsize ) break;
 			}
 			return recList;

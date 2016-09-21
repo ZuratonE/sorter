@@ -7,54 +7,24 @@ using System.Threading.Tasks;
 
 namespace SorterApp {
 	class LineRecord:IComparable {
+
 		public int numberKey {
 			get;
 		}
+
 		public List<int> words {
 			get;
 		}
+
 		public int wordsCount {
-			get{
+			get {
 				return words.Count;
 			}
-		}
-
-		public string ToString( SortedList<string, int> dict, TextInfo textInfo ) {
-			string result = numberKey.ToString();
-			result += ". " + textInfo.ToTitleCase( dict.ElementAt( words[0] ).Key );
-			for ( int i = 0; i < wordsCount; i++ ) {
-				result += " " + dict.ElementAt( words[i] ).Key ;
-			}
-			return result;
-		}
-		/*
-		public LineRecord() {
-			numberKey = 0;
-			words = new List<int>(0);
 		}
 
 		public LineRecord( int number, List<int> words ) {
 			this.numberKey = number;
 			this.words = words;
-		}  */
-
-		public LineRecord( string s, SortedList<string, int> dict, TextInfo textInfo ) {
-			int pb = s.IndexOf( '.' );
-			words = new List<int>( 0 );
-
-			numberKey = Convert.ToUInt16( s.Substring( 0, pb ) );
-			s = s + " ";
-			pb +=2;
-			int pe = s.IndexOf( " ", pb );
-			while ( pb < pe) {
-				string word = textInfo.ToLower(s.Substring( pb, pe-pb ));
-				if ( !dict.ContainsKey( word ) ) {
-					dict.Add( word, dict.Count );
-				}
-				words.Add(dict.IndexOfKey(word));
-				pb = pe+1;
-				pe = s.IndexOf( " ", pb );
-			}
 		}
 
 		public int CompareTo( LineRecord c ) {
